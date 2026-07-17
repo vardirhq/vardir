@@ -1,0 +1,426 @@
+/* ============================================================
+   Vardir — vardir.no
+   Palette: Paper #EFEEE9 · Ink #15181D · Indigo #5856E0
+   Type: Space Grotesk (display/body) · Space Mono (labels)
+   ============================================================ */
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: #EFEEE9;
+  color: #15181D;
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+
+section[id] { scroll-margin-top: 84px; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left: clamp(20px, 5vw, 48px);
+  padding-right: clamp(20px, 5vw, 48px);
+}
+
+.kicker {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #5856E0;
+  margin-bottom: 14px;
+}
+
+.kicker--light { color: #9D9BF0; }
+
+/* ── Keyframes (from the Vardir website design) ─────────────── */
+@keyframes vfloat { 0%,100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-18px) rotate(6deg); } }
+@keyframes blink { 0%,49% { opacity: 1; } 50%,100% { opacity: 0; } }
+@keyframes glowPulse { 0%,100% { box-shadow: 0 0 14px 4px rgba(240,168,96,0.5); } 50% { box-shadow: 0 0 22px 8px rgba(240,168,96,0.8); } }
+@keyframes ghostPulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
+@keyframes twinkle { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+@keyframes fadeCycle { 0%,20% { opacity: 0; transform: translateY(3px); } 35%,80% { opacity: 1; transform: translateY(0); } 95%,100% { opacity: 0; } }
+@keyframes badgePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+@keyframes nodePulse { 0%,100% { r: 6.5; opacity: 1; } 50% { r: 8; opacity: 0.75; } }
+@keyframes eq1 { 0%,100% { height: 4px; } 50% { height: 9px; } }
+@keyframes eq2 { 0%,100% { height: 8px; } 50% { height: 3px; } }
+@keyframes eq3 { 0%,100% { height: 5px; } 50% { height: 10px; } }
+@keyframes swatchCycle { 0%,100% { background: #6dbcdb; } 33% { background: #d4541e; } 66% { background: #9bb070; } }
+@keyframes shelfIn { 0%,15% { opacity: 0; transform: translateX(-6px); } 30%,85% { opacity: 1; transform: translateX(0); } 100% { opacity: 0; } }
+@keyframes checkPop { 0%,40% { background: transparent; } 55%,100% { background: #6ae0c6; } }
+@keyframes droneBob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+@keyframes revealIn { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes cardIn { from { opacity: 0; translate: 0 28px; } to { opacity: 1; translate: 0 0; } }
+
+/* ── Header / nav ───────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(239, 238, 233, 0.82);
+  border-bottom: 1px solid #E2E1DB;
+}
+
+.nav {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px clamp(20px, 5vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; }
+.brand span { font-weight: 600; font-size: 22px; letter-spacing: -0.025em; }
+
+.nav-links { display: flex; align-items: center; gap: clamp(20px, 3vw, 38px); }
+.nav-links a { font-size: 15px; color: #3A3D42; transition: color 0.2s; }
+.nav-links a:hover { color: #15181D; }
+
+.nav-cta {
+  font-size: 15px !important;
+  font-weight: 500;
+  color: #fff !important;
+  background: #15181D;
+  border-radius: 10px;
+  padding: 10px 20px;
+  transition: background 0.2s;
+}
+.nav-cta:hover { background: #2A2E35; }
+
+.burger {
+  display: none;
+  border: 1px solid #D8D7D0;
+  background: #fff;
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  cursor: pointer;
+  padding: 0;
+}
+.burger span { width: 18px; height: 2px; background: #15181D; border-radius: 2px; transition: transform 0.25s, opacity 0.25s; }
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  border-top: 1px solid #E2E1DB;
+  background: rgba(239, 238, 233, 0.96);
+  padding: 14px clamp(20px, 5vw, 48px) 22px;
+  flex-direction: column;
+  gap: 4px;
+}
+.mobile-menu a { font-size: 17px; color: #15181D; padding: 12px 0; border-bottom: 1px solid #E6E5DF; }
+.mobile-menu .mobile-cta {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background: #15181D;
+  border-radius: 11px;
+  padding: 14px;
+  border-bottom: none;
+}
+.mobile-menu.open { display: flex; animation: revealIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@media (max-width: 859px) {
+  .nav-links { display: none; }
+  .burger { display: flex; }
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background: #5856E0;
+  border-radius: 12px;
+  padding: 15px 30px;
+  box-shadow: 0 12px 28px -12px rgba(88, 86, 224, 0.7);
+  transition: background 0.25s, transform 0.25s;
+}
+.btn-primary:hover { background: #4a48c9; transform: translateY(-2px); }
+
+.btn-outline {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 500;
+  color: #15181D;
+  background: transparent;
+  border: 1px solid #CFCEC7;
+  border-radius: 12px;
+  padding: 15px 30px;
+  transition: border-color 0.25s, background 0.25s;
+}
+.btn-outline:hover { border-color: #15181D; background: rgba(21, 24, 29, 0.04); }
+
+.btn-ghost-dark {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #F2F1EC;
+  background: transparent;
+  border: 1px solid #363B44;
+  border-radius: 12px;
+  padding: 13px 28px;
+  cursor: pointer;
+  transition: border-color 0.25s, background 0.25s;
+}
+.btn-ghost-dark:hover { border-color: #5856E0; background: rgba(88, 86, 224, 0.1); }
+
+/* ── Project cards ──────────────────────────────────────────── */
+.card {
+  display: block;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid #262A31;
+  background: #16181D;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s, box-shadow 0.35s;
+}
+.card:hover {
+  transform: translateY(-6px);
+  border-color: #4a48b8;
+  box-shadow: 0 24px 48px -20px rgba(88, 86, 224, 0.45);
+}
+
+@supports (animation-timeline: view()) {
+  .card {
+    animation: cardIn linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 35%;
+  }
+}
+
+.card-body { padding: 24px 26px; }
+.card-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9D9BF0;
+  margin-bottom: 8px;
+}
+.card-body h3 { font-weight: 600; font-size: 21px; letter-spacing: -0.02em; margin: 0 0 8px; }
+.card-body p { font-size: 14.5px; line-height: 1.55; color: #9CA0A6; margin: 0; }
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+
+.more-projects { display: none; margin-top: 18px; }
+.more-projects.open { display: grid; animation: revealIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ── Service cards ──────────────────────────────────────────── */
+.service-card { background: #fff; border: 1px solid #E6E5DF; border-radius: 20px; padding: 34px; }
+.service-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #EEEDFB;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+.service-card h3 { font-weight: 600; font-size: 22px; letter-spacing: -0.02em; margin: 0 0 12px; }
+.service-card p { font-size: 15.5px; line-height: 1.6; color: #5A5D62; margin: 0; }
+
+/* ── Process ────────────────────────────────────────────────── */
+.process-step { border-top: 2px solid #15181D; padding-top: 20px; }
+.process-step .step-num { font-family: 'Space Mono', monospace; font-size: 13px; color: #5856E0; margin-bottom: 14px; }
+.process-step h3 { font-weight: 600; font-size: 19px; letter-spacing: -0.02em; margin: 0 0 10px; }
+.process-step p { font-size: 14.5px; line-height: 1.6; color: #5A5D62; margin: 0; }
+
+/* ============================================================
+   Splash — fast port of the Vardir reveal (vardir-splash.jsx)
+   comet → hex assembly → wedge → wordmark → tagline (~2.6 s)
+   Shown only when <html class="splash"> is set before paint.
+   ============================================================ */
+#splash { display: none; }
+
+html.splash body { overflow: hidden; }
+
+html.splash #splash {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #15181D;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.45s ease;
+}
+
+#splash.splash-out { opacity: 0; pointer-events: none; }
+
+.splash-grid {
+  position: absolute;
+  inset: -80px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.splash-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 46%, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0) 55%),
+    radial-gradient(90% 90% at 50% 60%, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, 0.5));
+}
+
+.splash-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 3.5vh, 34px);
+}
+
+.splash-mark { width: clamp(150px, 24vmin, 230px); }
+.splash-mark svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* Geometry pieces rotate around the viewBox centre (512,512) */
+.splash-mark .band,
+.splash-mark .wedge,
+.splash-mark .shock {
+  transform-box: view-box;
+  transform-origin: 50% 50%;
+}
+
+/* Bands snap in with a back-out rotation, staggered in reveal order */
+.splash-mark .band {
+  opacity: 0;
+  animation: splashBand 0.34s cubic-bezier(0.34, 1.46, 0.64, 1) both;
+}
+.splash-mark .band-1 { animation-delay: 0.36s; }
+.splash-mark .band-5 { animation-delay: 0.44s; }
+.splash-mark .band-4 { animation-delay: 0.52s; }
+.splash-mark .band-3 { animation-delay: 0.60s; }
+.splash-mark .band-2 { animation-delay: 0.68s; }
+
+@keyframes splashBand {
+  from { opacity: 0; transform: rotate(-42deg); }
+  30%  { opacity: 1; }
+  to   { opacity: 1; transform: rotate(0deg); }
+}
+
+/* Indigo wedge sweeps in last and locks the mark */
+.splash-mark .wedge {
+  opacity: 0;
+  animation: splashWedge 0.38s cubic-bezier(0.34, 1.5, 0.64, 1) 1.02s both;
+}
+@keyframes splashWedge {
+  from { opacity: 0; transform: rotate(-56deg); }
+  25%  { opacity: 1; }
+  to   { opacity: 1; transform: rotate(0deg); }
+}
+
+/* Comet flies in from top-right along the 30° axis and impacts centre */
+.splash-mark .comet {
+  animation: splashComet 0.26s cubic-bezier(0.65, 0, 0.85, 0.25) 0.05s both,
+             splashCometFade 0.1s linear 0.30s forwards;
+}
+@keyframes splashComet {
+  from { transform: translate(675px, -390px); opacity: 1; }
+  to   { transform: translate(0, 0); opacity: 1; }
+}
+@keyframes splashCometFade { to { opacity: 0; } }
+
+/* Impact flash */
+.splash-mark .flash { opacity: 0; animation: splashFlash 0.34s ease-out 0.30s both; }
+@keyframes splashFlash {
+  0%   { opacity: 0; r: 10; }
+  18%  { opacity: 0.8; r: 30; }
+  100% { opacity: 0; r: 86; }
+}
+
+/* Shockwave hexagons — one on impact, one on wedge lock */
+.splash-mark .shock { opacity: 0; }
+.splash-mark .shock-1 { animation: splashShock 0.5s cubic-bezier(0.33, 1, 0.68, 1) 0.30s both; }
+.splash-mark .shock-2 { animation: splashShock 0.55s cubic-bezier(0.33, 1, 0.68, 1) 1.32s both; }
+@keyframes splashShock {
+  from { opacity: 0.55; transform: scale(0.55); stroke-width: 5; }
+  to   { opacity: 0; transform: scale(1.9); stroke-width: 0.4; }
+}
+
+/* Wordmark letters rise out of a masked line */
+.splash-word {
+  display: flex;
+  font-weight: 600;
+  font-size: clamp(44px, 9vmin, 92px);
+  letter-spacing: 0.015em;
+  color: #fff;
+  line-height: 1;
+}
+.splash-word span { display: inline-block; overflow: hidden; padding-bottom: 0.08em; }
+.splash-word span i {
+  display: inline-block;
+  font-style: normal;
+  transform: translateY(112%);
+  animation: splashLetter 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.splash-word span:nth-child(1) i { animation-delay: 1.30s; }
+.splash-word span:nth-child(2) i { animation-delay: 1.35s; }
+.splash-word span:nth-child(3) i { animation-delay: 1.40s; }
+.splash-word span:nth-child(4) i { animation-delay: 1.45s; }
+.splash-word span:nth-child(5) i { animation-delay: 1.50s; }
+.splash-word span:nth-child(6) i { animation-delay: 1.55s; }
+@keyframes splashLetter {
+  from { transform: translateY(112%); filter: blur(7px); opacity: 0; }
+  to   { transform: translateY(0); filter: blur(0); opacity: 1; }
+}
+
+/* Divider + tagline */
+.splash-divider {
+  width: 220px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(88, 86, 224, 0), #5856E0, rgba(88, 86, 224, 0));
+  transform: scaleX(0);
+  animation: splashDivider 0.45s cubic-bezier(0.65, 0, 0.35, 1) 1.70s both;
+}
+@keyframes splashDivider { to { transform: scaleX(1); } }
+
+.splash-tag {
+  font-family: 'Space Mono', monospace;
+  font-size: clamp(11px, 2vmin, 18px);
+  color: #9D9BF0;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  padding-left: 0.24em;
+  opacity: 0;
+  animation: splashTag 0.5s cubic-bezier(0.33, 1, 0.68, 1) 1.82s both;
+}
+@keyframes splashTag {
+  from { opacity: 0; transform: translateY(12px); letter-spacing: 0.36em; }
+  to   { opacity: 1; transform: translateY(0); letter-spacing: 0.24em; }
+}
+
+/* ── Reduced motion ─────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
